@@ -11,12 +11,12 @@ public class SimpleArrayTest {
 
     @Test
     public void add() {
-        SimpleArray<Integer> array = new SimpleArray<>(new Integer[]{1, 2, null, null});
+        SimpleArray<Integer> array = new SimpleArray<>(new Integer[3]);
         array.add(7);
         array.add(2);
-        SimpleArray<Integer> exp = new SimpleArray<>(new Integer[]{1, 2, 7, 2});
+        SimpleArray<Integer> exp = new SimpleArray<>(new Integer[]{7, 2, 0});
         assertThat(exp.toString(), is("SimpleArray{"
-                + "array=" + "[" + "1," + " " + "2," + " " + "7," + " " + "2" + "]"
+                + "array=" + "[" + "7," + " " + "2," + " " + "0" + "]"
                 + '}'));
     }
 

@@ -5,16 +5,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class SimpleArray<T> implements Iterable<T> {
-    private T[] array;
+public class SimpleArray<T> implements Iterator<T> {
+    private final T[] array;
     private int size = 0;
+    private int point = 0;
 
     public SimpleArray(T[] array) {
         this.array = array;
         for (int i = 0; i < array.length; i++) {
-             if (array[i] != null) {
-                 size++;
-             }
+            if (array[i] != null || array[i] != (Integer) 0 || array[i] != (Boolean) false) {
+                size++;
+            }
         }
     }
 
@@ -42,13 +43,7 @@ public class SimpleArray<T> implements Iterable<T> {
         System.out.println(size + "razmer method get");
         System.out.println(Objects.checkIndex(index, size) + "result");
         Objects.checkIndex(index, size);
-        for (T t : array) {
-            if (t == array[index]) {
-                return t;
-
-            }
-        }
-        return null;
+        return array[index];
     }
 
     /**
@@ -56,13 +51,8 @@ public class SimpleArray<T> implements Iterable<T> {
      * находящийся по индексу index;
      */
     public void set(int index, T model) { // заменить на элемент
-        // if () // в рамках добавленных элементов
         Objects.checkIndex(index, size);
-        for (int i = 0; i < array.length; i++) {
-            if (i == index) {
-                array[i] = model;
-            }
-        }
+        array[index] = model;
     }
 
     /**
@@ -78,8 +68,13 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return List.of(this.array).iterator();
+    public T next() {
+        return array[point++];
+    }
+
+    @Override
+    public boolean hasNext() {
+        return point < array.length;
     }
 
     @Override
