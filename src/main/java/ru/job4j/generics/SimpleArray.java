@@ -74,7 +74,7 @@ public class SimpleArray<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return point < array.length;
+        return point < size;
     }
 
     @Override

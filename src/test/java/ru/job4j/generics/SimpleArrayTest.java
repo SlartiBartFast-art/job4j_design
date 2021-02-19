@@ -41,4 +41,25 @@ public class SimpleArrayTest {
                 + "array=" + "[" + "1," + " " + "3," + " " + "4," + " " + "null" + "]"
                 + '}'));
     }
+    @Test
+    public void whenReadInteger() {
+        SimpleArray<Integer> it = new SimpleArray<>(new Integer[] {1, 2, 3}
+        );
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(3));
+    }
+    @Test
+    public void whenMultiCallhasNextThenTrue() {
+        SimpleArray<Integer> it = new SimpleArray<>(new Integer[] {1, 2, 3}
+        );
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(1));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(2));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(3));
+        assertThat(it.hasNext(), is(false));
+    }
+
 }
