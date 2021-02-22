@@ -11,26 +11,22 @@ public class SimpleArray<T> implements Iterable<T> {
     private int point = 0;
 
     public SimpleArray(int length) {
-       // Objects.checkIndex(index, point);
-       this.array = (T[]) new Object[length];
+        // Objects.checkIndex(index, point);
+        this.array = (T[]) new Object[length];
     }
 
     /**
      * добавляет указанный элемент (model) в первую свободную ячейку;
      */
     public void add(T model) {
-        if (Objects.checkIndex(point, array.length) == point) {
-        this.array[point++] = model;
-        }
-
+        Objects.checkIndex(point, array.length);
+            this.array[point++] = model;
     }
 
     /**
      * возвращает элемент, расположенный по указанному индексу;
      */
     public T get(int index) {
-        System.out.println(point + "razmer method get");
-        System.out.println(Objects.checkIndex(index, point) + "result");
         Objects.checkIndex(index, point);
         return array[index];
     }
@@ -66,7 +62,7 @@ public class SimpleArray<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private  int count = 0;
+            private int count = 0;
 
             @Override
             public boolean hasNext() {
@@ -80,20 +76,6 @@ public class SimpleArray<T> implements Iterable<T> {
         };
     }
 
-    public static void main(String[] args) {
-SimpleArray<Integer> simpleArray = new SimpleArray<>(10);
-        System.out.println(simpleArray);
-        simpleArray.add(1);
-        simpleArray.add(2);
-        simpleArray.add(3);
-        simpleArray.add(2);
-        simpleArray.add(7);
-        System.out.println(simpleArray);
-        simpleArray.set(2, 5);
-        System.out.println(simpleArray);
-        simpleArray.remove(4);
-        System.out.println(simpleArray);
-        System.out.println(simpleArray.point);
-    }
 }
+
 
