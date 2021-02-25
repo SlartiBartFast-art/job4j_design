@@ -46,10 +46,12 @@ public class SimpleArray<T> implements Iterable<T> {
     public boolean remove(int index) {
         boolean rsl = false;
         int newSize = size - 1;
+        Objects.checkIndex(index, size);
         if (newSize > index) {
             System.arraycopy(container, index + 1, container, index, newSize - index);
             container[newSize] = null;
             rsl = true;
+            size--;
         }
         return rsl;
     }

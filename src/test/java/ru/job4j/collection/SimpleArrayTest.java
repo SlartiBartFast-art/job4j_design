@@ -53,4 +53,25 @@ public class SimpleArrayTest {
         array.add("second");
         it.next();
     }
+
+    @Test
+    public void whenRemove() {
+        SimpleArray<String> array = new SimpleArray<>();
+        array.add("first");
+        array.add("two");
+        array.remove(1);
+        String rsl = array.get(0);
+        assertThat(rsl, is("first"));
+    }
+    @Test
+    public void whenRemoveThenNull() {
+        SimpleArray<String> array = new SimpleArray<>();
+        array.add("first");
+        array.add("two");
+        array.add("three");
+        array.add("five");
+        array.remove(2);
+        String rsl = array.get(2);
+        assertThat(rsl, is("five"));
+    }
 }
