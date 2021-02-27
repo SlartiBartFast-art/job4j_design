@@ -63,6 +63,7 @@ public class SimpleArrayTest {
         String rsl = array.get(0);
         assertThat(rsl, is("first"));
     }
+
     @Test
     public void whenRemoveThenNull() {
         SimpleArray<String> array = new SimpleArray<>();

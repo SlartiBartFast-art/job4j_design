@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
-
 public class LinkedListTest {
+
     @Test
     public void whenAddThenGet() {
         LinkedList<String> list = new LinkedList<>();
@@ -16,6 +16,7 @@ public class LinkedListTest {
         String rsl = list.get(0);
         assertThat(rsl, is("first"));
     }
+
     @Test
     public void whenAddThenIterator() {
         LinkedList<String> list = new LinkedList<>();

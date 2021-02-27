@@ -32,6 +32,7 @@ public class MatrixItTest {
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(true));
     }
+
     @Test
     public void whenRowHasDiffSize() {
         int[][] in = {

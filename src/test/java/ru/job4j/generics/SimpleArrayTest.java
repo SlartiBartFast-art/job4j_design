@@ -24,7 +24,7 @@ public class SimpleArrayTest {
         simpleArray.add(8);
         simpleArray.add(15);
         int rsl = simpleArray.get(2);
-        assertThat(rsl, is (15));
+        assertThat(rsl, is(15));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class SimpleArrayTest {
         simpleArray.remove(1);
         SimpleArray<Integer> rsl = simpleArray;
         //SimpleArray<Integer> exp = new SimpleArray<Integer>(new int[]{1, 0, 3, 0, 0});
-        assertThat(rsl.toString(), is ("SimpleArray{"
+        assertThat(rsl.toString(), is("SimpleArray{"
                 + "array=" + "[" + "1," + " " + "3," + " " + "null," + " " + "null" + "]"
                 + '}'));
     }
