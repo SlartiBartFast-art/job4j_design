@@ -26,19 +26,12 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     public T deleteFirst() {
-        T t = null;
-        if (head != null) { // проверяем что указатель не пустой(там есть дальше нода)
-            Node<T> tmp = head; // получили ту ноду на которую указывает Хед /нода1
-            Node<T> node = tmp.next; // взяли указатель первой ноды на след ноду2
-
-            head = node; // прописали в Хед что первод будет след нода2
-            t = tmp.value; // получили значение из нода1 которую удаляем
-            tmp.next = null; // удаляем указатель на ноду2 из ноды1
-        }
-        if (t == null) {
+        if (head == null) {
             throw new NoSuchElementException();
         }
-
+        //if (head != null) { // проверяем что указатель не пустой(там есть дальше нода)
+        T t = head.value; // прописали зачение которое будет удалено
+        head = head.next; // прописали в Хед что первод будет след нода2
         return t; // возвращаем удаляемое значение
     }
 
@@ -54,6 +47,11 @@ public class ForwardLinked<T> implements Iterable<T> {
         }
         return th;
     }*/
+
+    public T deleteLast() {
+        T t = null;
+        return t;
+    }
 
     @Override
     public Iterator<T> iterator() {
