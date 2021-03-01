@@ -35,21 +35,50 @@ public class ForwardLinked<T> implements Iterable<T> {
         return t; // возвращаем удаляемое значение
     }
 
-  /* public T get(T t) {
-        T th  = null;
-        if (head != null) {
-            //Node<T> node = head.next;
-            for (int i = 0; i < size; i++) {
-                if (head.value == t) {
-                th = head.value;
-                }
+    public T get(int index) {
+        //Node<T> t = null;
+        T t = null;
+        int i = 0;
+        Node<T> currentNode = head; // первая нода
+        while (currentNode != null) {
+//
+            if (i == index) {
+                // t = currentNode;
+                t = currentNode.getValue();
+                return t;
             }
+
+            currentNode = currentNode.getNext(); // four ->> three ->> two ->> one ->> null
+            i++;
         }
-        return th;
-    }*/
+        return t;
+    }
 
     public T deleteLast() {
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
         T t = null;
+        Node<T> currentNode = head;
+        Node<T> currentNodeNext = head.getNext();
+
+        if (currentNodeNext == null) {
+            t = currentNode.getValue();
+            currentNode = null;
+            return t;
+        }
+
+        while (currentNode != null) {
+
+            if (currentNodeNext.next == null) {
+                currentNode.next = null;
+                t = currentNodeNext.getValue();
+                return t;
+            }
+            currentNode = currentNode.getNext();
+            currentNodeNext = currentNode.getNext();
+
+        }
         return t;
     }
 
@@ -83,5 +112,37 @@ public class ForwardLinked<T> implements Iterable<T> {
             this.value = value;
             this.next = next;
         }
+
+        public Node<T> getNext() {
+            return next;
+        }
+
+        public T getValue() {
+            return value;
+        }
+
+        public void setNext(Node<T> next) {
+            this.next = next;
+        }
+    }
+
+    public static void main(String[] args) {
+        ForwardLinked<String> forwardLinked = new ForwardLinked<>();
+        forwardLinked.add("First");
+        //forwardLinked.add("Second");
+        //forwardLinked.add("tree");
+        //forwardLinked.add("Second11");
+        //forwardLinked.add("tree11");
+        // forwardLinked.deleteFirst();
+        //forwardLinked.deleteLast();
+        //System.out.println(forwardLinked.deleteFirst());
+        //System.out.println(forwardLinked.deleteFirst());
+        System.out.println(forwardLinked.deleteLast());
+        System.out.println(forwardLinked.get(1));
+        System.out.println(forwardLinked.get(2));
+        System.out.println(forwardLinked.get(3));
+        System.out.println(forwardLinked.get(4));
+        System.out.println(forwardLinked.get(5));
+
     }
 }
