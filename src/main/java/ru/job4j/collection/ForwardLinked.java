@@ -2,6 +2,7 @@ package ru.job4j.collection;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
 public class ForwardLinked<T> implements Iterable<T> {
 
@@ -64,19 +65,17 @@ public class ForwardLinked<T> implements Iterable<T> {
 
         if (currentNodeNext == null) {
             t = currentNode.getValue();
-            currentNode = null;
+            head = null;
             return t;
         }
-
-        while (currentNode != null) {
-
-            if (currentNodeNext.next == null) {
+        while (currentNodeNext != null) {
+            if (currentNodeNext.getNext() == null) {
+                t = currentNodeNext.value;
                 currentNode.next = null;
-                t = currentNodeNext.getValue();
                 return t;
             }
             currentNode = currentNode.getNext();
-            currentNodeNext = currentNode.getNext();
+            currentNodeNext = currentNodeNext.getNext();
 
         }
         return t;
@@ -124,12 +123,30 @@ public class ForwardLinked<T> implements Iterable<T> {
         public void setNext(Node<T> next) {
             this.next = next;
         }
+
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", Node.class.getSimpleName() + "[", "]")
+                    .add("value=" + value)
+                    .add("next=" + next)
+                    .toString();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", ForwardLinked.class.getSimpleName() + "[", "]")
+                .add("head=" + head)
+                .add("modCount=" + modCount)
+                .add("size=" + size)
+                .toString();
     }
 
     public static void main(String[] args) {
         ForwardLinked<String> forwardLinked = new ForwardLinked<>();
         forwardLinked.add("First");
-        //forwardLinked.add("Second");
+
+        forwardLinked.add("Second");
         //forwardLinked.add("tree");
         //forwardLinked.add("Second11");
         //forwardLinked.add("tree11");
@@ -138,6 +155,8 @@ public class ForwardLinked<T> implements Iterable<T> {
         //System.out.println(forwardLinked.deleteFirst());
         //System.out.println(forwardLinked.deleteFirst());
         System.out.println(forwardLinked.deleteLast());
+        System.out.println(forwardLinked.get(0));
+
         System.out.println(forwardLinked.get(1));
         System.out.println(forwardLinked.get(2));
         System.out.println(forwardLinked.get(3));
