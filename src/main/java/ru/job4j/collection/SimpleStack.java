@@ -11,7 +11,7 @@ public class SimpleStack<T> {
      * Метод push(T value) - помещает значение в коллекцию.
      */
     public void push(T value) {
-        linked.add(value);
+        linked.addFirst(value);
         size++;
     }
 

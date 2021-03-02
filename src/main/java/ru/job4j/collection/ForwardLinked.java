@@ -26,6 +26,14 @@ public class ForwardLinked<T> implements Iterable<T> {
         size++;
     }
 
+    public void addFirst(T value) {
+        Node<T> node = new Node<>(value, null);
+        if (head != null) {
+            node.next = head;
+        }
+        head = node;
+    }
+
     public T deleteFirst() {
         if (head == null) {
             throw new NoSuchElementException();
@@ -79,6 +87,13 @@ public class ForwardLinked<T> implements Iterable<T> {
 
         }
         return t;
+    }
+
+    /**метод должен переставить элементы в обратном порядке.
+     Например, Было 1, 2, 3 поле метода revert будет 3, 2, 1.
+     * */
+    public void revert() {
+        //TODO impl reverts of linked list.
     }
 
     @Override

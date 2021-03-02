@@ -24,16 +24,13 @@ public class SimpleQueue<T> {
         if (in.isEmpty()) {
             throw new NoSuchElementException();
         }
-        t = in.pop();
-        out.push(t);
-      /*  if (out.isEmpty()) {
+        if (out.isEmpty()) {
             while (!in.isEmpty()) {
                 t = in.pop();
                 out.push(t);
-
             }
-        }*/
-        return t;
+        }
+        return out.pop();
     }
 
     @Override
