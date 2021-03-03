@@ -24,13 +24,13 @@ public class SimpleQueue<T> {
         if (in.isEmpty()) {
             throw new NoSuchElementException();
         }
-        if (out.isEmpty()) {
-            while (!in.isEmpty()) {
-                t = in.pop();
-                out.push(t);
+        if (out.isEmpty()) { // проверяем пуст ли второй стек
+            while (!in.isEmpty()) { // делаем пока не закончаться элемнты в первом стеке
+                t = in.pop(); // получаем то значение которое удаляем первым(с головы) у стек 1
+                out.push(t); //заносим его в первым в стек два
             }
         }
-        return out.pop();
+        return out.pop(); // удаляем первый элемент из стек два и выводим
     }
 
     @Override
@@ -46,11 +46,11 @@ public class SimpleQueue<T> {
         fifo.push("один");
         fifo.push("два");
         fifo.push("три");
-        fifo.poll();
+        System.out.println(fifo.poll());
         System.out.println(fifo);
         fifo.push("четыри");
         System.out.println(fifo);
-        fifo.poll();
+        System.out.println(fifo.poll());
         System.out.println(fifo);
 
     }

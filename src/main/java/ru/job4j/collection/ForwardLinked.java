@@ -67,33 +67,41 @@ public class ForwardLinked<T> implements Iterable<T> {
         if (head == null) {
             throw new NoSuchElementException();
         }
-        T t = null;
-        Node<T> currentNode = head;
-        Node<T> currentNodeNext = head.getNext();
-
-        if (currentNodeNext == null) {
-            t = currentNode.getValue();
-            head = null;
-            return t;
+        if (head.next == null) {
+            T value = head.value;
+            head = head.next;
+            return value;
         }
-        while (currentNodeNext != null) {
-            if (currentNodeNext.getNext() == null) {
-                t = currentNodeNext.value;
-                currentNode.next = null;
-                return t;
-            }
-            currentNode = currentNode.getNext();
-            currentNodeNext = currentNodeNext.getNext();
-
+        T value;
+        Node<T> current = head;
+        Node<T> beforeCurrent = null;
+        while (current.next != null) {
+            beforeCurrent = current;
+            current = current.next;
         }
-        return t;
+        value = current.value;
+        beforeCurrent.next = null;
+        return value;
     }
 
-    /**метод должен переставить элементы в обратном порядке.
-     Например, Было 1, 2, 3 поле метода revert будет 3, 2, 1.
-     * */
+    /**
+     * перевернуть односвязный список. / 5. Очередь на двух стеках [# 471674]
+     * метод должен переставить элементы в обратном порядке.
+     * Например, Было 1, 2, 3 поле метода revert будет 3, 2, 1.
+     */
     public void revert() {
-        //TODO impl reverts of linked list.
+        Node<T> prevNode = null;
+        Node<T> currentNode = head;
+        Node<T> nextNode = head.next;
+
+        while (nextNode != null) {
+            currentNode.next = prevNode;
+            prevNode = currentNode;
+            currentNode = nextNode;
+            nextNode = currentNode.next;
+        }
+        currentNode.next = prevNode;
+        head = currentNode;
     }
 
     @Override
@@ -159,9 +167,9 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     public static void main(String[] args) {
         ForwardLinked<String> forwardLinked = new ForwardLinked<>();
-        forwardLinked.add("First");
+        // forwardLinked.add("Один");
 
-        forwardLinked.add("Second");
+        // forwardLinked.add("Два");
         //forwardLinked.add("tree");
         //forwardLinked.add("Second11");
         //forwardLinked.add("tree11");
@@ -169,14 +177,20 @@ public class ForwardLinked<T> implements Iterable<T> {
         //forwardLinked.deleteLast();
         //System.out.println(forwardLinked.deleteFirst());
         //System.out.println(forwardLinked.deleteFirst());
-        System.out.println(forwardLinked.deleteLast());
+        forwardLinked.addFirst("один");
+        System.out.println(forwardLinked);
+        forwardLinked.addFirst("два");
+        System.out.println(forwardLinked);
+        forwardLinked.addFirst("три");
+        System.out.println(forwardLinked);
+        /*System.out.println(forwardLinked.deleteLast());
         System.out.println(forwardLinked.get(0));
 
         System.out.println(forwardLinked.get(1));
         System.out.println(forwardLinked.get(2));
         System.out.println(forwardLinked.get(3));
         System.out.println(forwardLinked.get(4));
-        System.out.println(forwardLinked.get(5));
+        System.out.println(forwardLinked.get(5));*/
 
     }
 }
