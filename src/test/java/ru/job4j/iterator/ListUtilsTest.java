@@ -35,6 +35,13 @@ public class ListUtilsTest {
     }
 
     @Test
+    public void whenAddAfterThenWho() {
+        List<Integer> input = new ArrayList<>(Arrays.asList(0, 1));
+        ListUtils.addAfter(input, 1, 2);
+        assertThat(Arrays.asList(0, 1, 2), Is.is(input));
+    }
+
+    @Test
     public void whenRemoveIf() {
         List<Integer> input = new ArrayList<>(Arrays.asList(2, 4, 6, 8));
         ListUtils.removeIf(input, integer -> integer > 3);
@@ -55,4 +62,6 @@ public class ListUtilsTest {
         ListUtils.removeAll(input, removing);
         assertThat(Arrays.asList(1, 2, 3), Is.is(input));
     }
+
+
 }

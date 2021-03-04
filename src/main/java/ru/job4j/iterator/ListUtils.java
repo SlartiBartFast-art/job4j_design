@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 public class ListUtils {
 
     /**
-     * addBefore() вставляет до индекса;
+     * addBefore() вставляет значение до индекса;
      */
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
@@ -21,17 +21,18 @@ public class ListUtils {
     }
 
     /**
-     * addAfter() вставляет после индекса;
+     * addAfter() вставляет значение после индекса;
      */
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
         ListIterator<T> i = list.listIterator();
         while (i.hasNext()) {
-            if (i.previousIndex() == index) {
+            i.next();
+            if (i.nextIndex() == index + 1) {
                 i.add(value);
                 break;
             }
-            i.next();
+
         }
     }
 
