@@ -90,6 +90,9 @@ public class ForwardLinked<T> implements Iterable<T> {
      * Например, Было 1, 2, 3 поле метода revert будет 3, 2, 1.
      */
     public void revert() {
+        if (head == null) {
+            return;
+        }
         Node<T> prevNode = null;
         Node<T> currentNode = head;
         Node<T> nextNode = head.next;
