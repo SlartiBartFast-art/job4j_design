@@ -21,7 +21,7 @@ public class SimpleQueue<T> {
      */
     public T poll() {
         T t = null;
-        if (in.isEmpty()) {
+        if (in.isEmpty() && out.isEmpty()) {
             throw new NoSuchElementException();
         }
         if (out.isEmpty()) { // проверяем пуст ли второй стек
