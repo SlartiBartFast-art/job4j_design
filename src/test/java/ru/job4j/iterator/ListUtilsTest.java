@@ -8,11 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static org.junit.Assert.assertThat;;
+import static org.junit.Assert.assertThat;
 
 public class ListUtilsTest {
-
-
 
     @Test
     public void whenAddBefore() {
@@ -62,6 +60,4 @@ public class ListUtilsTest {
         ListUtils.removeAll(input, removing);
         assertThat(Arrays.asList(1, 2, 3), Is.is(input));
     }
-
-
 }
