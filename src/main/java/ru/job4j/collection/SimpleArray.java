@@ -65,6 +65,9 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
+                if (expectModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return count < size;
             }
 
@@ -73,11 +76,18 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                if (expectModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
+
                 return container[count++];
             }
         };
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", SimpleArray.class.getSimpleName() + "[", "]")
+                .add("container=" + Arrays.toString(container))
+                .add("size=" + size)
+                .add("modCount=" + modCount)
+                .toString();
     }
 }
