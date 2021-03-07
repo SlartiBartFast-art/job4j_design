@@ -10,6 +10,7 @@ import static java.util.Objects.hash;
 public class SimplUser {
     public static void main(String[] args) {
         Map<User, Object> simplmap = new HashMap<>();
+
         final Calendar calendar = Calendar.getInstance();
         calendar.clear();
         calendar.set(2021, Calendar.JANUARY, 01);
@@ -26,10 +27,10 @@ public class SimplUser {
             System.out.println("User 1 hascode" + one);
             int two = simplmap.get(user2).hashCode();
             System.out.println("User 2 hascode" + two);
-            int filo = hash(one) & 16;
-            System.out.println("User 1 array bucket" + "___" + filo);
-            int filo2 = hash(two) & 16;
-            System.out.println("User 2 array bucket" + "___" + filo2);
+            //int filo = hash(one) & 16;
+          //  System.out.println("User 1 array bucket" + "___" + filo);
+            //int filo2 = hash(two) & 16;
+          //  System.out.println("User 2 array bucket" + "___" + filo2);
             int heh = user1.hashCode();
             System.out.println("prosto hash" + "---" + heh);
             int heh2 = hash(heh) & 16;
