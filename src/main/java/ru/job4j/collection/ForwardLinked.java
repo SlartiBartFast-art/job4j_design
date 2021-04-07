@@ -4,9 +4,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
+/**
+ * Односвязный список (контейнер)
+ * Task - Удалить head в односвязном списке. [#471669]
+ * @param <T>
+ */
 public class ForwardLinked<T> implements Iterable<T> {
 
-    private Node<T> head;
+    private Node<T> head; // всегда указывает на первый элемент
     private int modCount = 0;
     private int size = 0;
 
@@ -32,6 +37,7 @@ public class ForwardLinked<T> implements Iterable<T> {
             node.next = head;
         }
         head = node;
+        size++;
     }
 
     public T deleteFirst() {
@@ -41,6 +47,7 @@ public class ForwardLinked<T> implements Iterable<T> {
         //if (head != null) { // проверяем что указатель не пустой(там есть дальше нода)
         T t = head.value; // прописали зачение которое будет удалено
         head = head.next; // прописали в Хед что первод будет след нода2
+        size--;
         return t; // возвращаем удаляемое значение
     }
 
@@ -70,6 +77,7 @@ public class ForwardLinked<T> implements Iterable<T> {
         if (head.next == null) {
             T value = head.value;
             head = head.next;
+            size--;
             return value;
         }
         T value;
@@ -81,6 +89,7 @@ public class ForwardLinked<T> implements Iterable<T> {
         }
         value = current.value;
         beforeCurrent.next = null;
+        size--;
         return value;
     }
 
@@ -105,6 +114,10 @@ public class ForwardLinked<T> implements Iterable<T> {
         }
         currentNode.next = prevNode;
         head = currentNode;
+    }
+
+    public int size() {
+        return size;
     }
 
     @Override
@@ -181,11 +194,14 @@ public class ForwardLinked<T> implements Iterable<T> {
         //System.out.println(forwardLinked.deleteFirst());
         //System.out.println(forwardLinked.deleteFirst());
         forwardLinked.addFirst("один");
-        System.out.println(forwardLinked);
+       // System.out.println(forwardLinked);
         forwardLinked.addFirst("два");
-        System.out.println(forwardLinked);
+       // System.out.println(forwardLinked);
         forwardLinked.addFirst("три");
         System.out.println(forwardLinked);
+        System.out.println(forwardLinked.size());
+        forwardLinked.deleteLast();
+        System.out.println(forwardLinked.size());
         /*System.out.println(forwardLinked.deleteLast());
         System.out.println(forwardLinked.get(0));
 

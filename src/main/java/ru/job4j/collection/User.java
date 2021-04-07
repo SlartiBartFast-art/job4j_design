@@ -4,6 +4,9 @@ import java.util.Calendar;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+/**
+ * Без переопределения equals и hashCode [#471704]
+ */
 public class User {
     private String name;
     private int children;
@@ -39,7 +42,7 @@ public class User {
         this.birthday = birthday;
     }
 
-    @Override
+   @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -55,10 +58,10 @@ public class User {
 
     @Override
     public int hashCode() {
-        //return Objects.hash(name, children, birthday);
-        int result = this.name.hashCode();
+        return Objects.hash(name, children, birthday);
+       /* int result = this.name.hashCode();
         result = 31 * result;
-        return result;
+        return result;*/
     }
 
     @Override

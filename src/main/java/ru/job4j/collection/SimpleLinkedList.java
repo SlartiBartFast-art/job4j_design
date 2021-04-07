@@ -2,14 +2,18 @@ package ru.job4j.collection;
 
 import java.util.*;
 
-public class LinkedList<T> implements Iterable<T> { //контейнер
+/**
+ * Создать контейнер на базе связанного списка [#471673]
+ * @param <T>
+ */
+public class SimpleLinkedList<T> implements Iterable<T> { //контейнер
     private int size = 0; // количество добавленных элементов в список
     private Node<T> nodeFirst; //первый узел в списке
     private Node<T> nodeLast; //последний узел
 
     private int modCount = 0; // сколь раз изменен с момента создания
 
-    public LinkedList() {
+    public SimpleLinkedList() {
         nodeLast = new Node<T>(null, nodeFirst, null);
         nodeFirst = new Node<T>(null, null, nodeLast);
     }

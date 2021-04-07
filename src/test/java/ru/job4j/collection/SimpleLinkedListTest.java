@@ -7,11 +7,11 @@ import java.util.Iterator;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
-public class LinkedListTest {
+public class SimpleLinkedListTest {
 
     @Test
     public void whenAddThenGet() {
-        LinkedList<String> list = new LinkedList<>();
+        SimpleLinkedList<String> list = new SimpleLinkedList<>();
         list.add("first");
         String rsl = list.get(0);
         assertThat(rsl, is("first"));
@@ -19,7 +19,7 @@ public class LinkedListTest {
 
     @Test
     public void whenAddThenIterator() {
-        LinkedList<String> list = new LinkedList<>();
+        SimpleLinkedList<String> list = new SimpleLinkedList<>();
         list.add("first");
         String rsl = list.iterator().next();
         assertThat(rsl, is("first"));
@@ -27,30 +27,30 @@ public class LinkedListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void whenGetEmpty() {
-        LinkedList<String> linkedList = new LinkedList<>();
-        linkedList.get(0);
+        SimpleLinkedList<String> simpleLinkedList = new SimpleLinkedList<>();
+        simpleLinkedList.get(0);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void whenGetOutBound() {
-        LinkedList<String> linkedList = new LinkedList<>();
-        linkedList.add("first");
-        linkedList.get(1);
+        SimpleLinkedList<String> simpleLinkedList = new SimpleLinkedList<>();
+        simpleLinkedList.add("first");
+        simpleLinkedList.get(1);
 
     }
 
     @Test(expected = NoSuchElementException.class)
     public void whenGetEmptyFromIt() {
-       LinkedList<String> linkedList = new LinkedList<>();
-        linkedList.iterator().next();
+       SimpleLinkedList<String> simpleLinkedList = new SimpleLinkedList<>();
+        simpleLinkedList.iterator().next();
     }
 
     @Test(expected = ConcurrentModificationException.class)
     public void whenCorruptedIt() {
-        LinkedList<String> linkedList = new LinkedList<>();
-        linkedList.add("first");
-        Iterator<String> it = linkedList.iterator();
-        linkedList.add("second");
+        SimpleLinkedList<String> simpleLinkedList = new SimpleLinkedList<>();
+        simpleLinkedList.add("first");
+        Iterator<String> it = simpleLinkedList.iterator();
+        simpleLinkedList.add("second");
         it.next();
     }
 

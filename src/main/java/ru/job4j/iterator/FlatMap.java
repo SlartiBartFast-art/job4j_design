@@ -22,7 +22,6 @@ public class FlatMap<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        boolean rsl = false;
         while (!currentIterator.hasNext() && data.hasNext()) {
             //  data.hasNext() - здесь нужен т.к. в методе происходит вызов next(), перед ним
             // Обязательно! должен быть вызов hasNext()
@@ -40,15 +39,21 @@ public class FlatMap<T> implements Iterator<T> {
     }
 
     public static void main(String[] args) {
-       Iterator<Iterator<Integer>> data = List.of(
+        Iterator<Iterator<Integer>> data = List.of(
                 List.of(1, 2, 3).iterator(),
                 List.of(4, 5, 6).iterator(),
                 List.of(7, 8, 9).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        while (flat.hasNext()) {
+        flat.hasNext();
+        Integer init =  flat.next();
+        System.out.println(init);
+        Integer ini1t =  flat.next();
+        System.out.println(ini1t);
+
+       /* while (flat.hasNext()) {
             System.out.println(flat.next());
-        }
+        }*/
         Iterator<Iterator<?>> it = List.of(
                 List.of().iterator(),
                 List.of().iterator(),

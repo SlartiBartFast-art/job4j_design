@@ -2,6 +2,11 @@ package ru.job4j.collection;
 
 import java.util.StringJoiner;
 
+/**
+ * Используя контейнер на базе связанного списка создать
+ * контейнер Stack [#471670]
+ * @param <T>
+ */
 public class SimpleStack<T> {
     private ForwardLinked<T> linked = new ForwardLinked<T>();
     //поле ForwardLinked. Это связанный список из предыдущего задания.

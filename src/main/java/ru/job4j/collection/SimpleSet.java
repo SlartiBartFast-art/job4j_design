@@ -24,6 +24,7 @@ public class SimpleSet<T> implements Iterable<T> {
         for (T f : simpleArray) {
             if (Objects.equals(f, t)) {
                 rsl = true;
+                break;
             }
         }
         return rsl;
