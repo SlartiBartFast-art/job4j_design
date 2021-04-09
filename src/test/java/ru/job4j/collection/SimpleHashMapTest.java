@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.*;
 
+
 public class SimpleHashMapTest {
 
     private SimpleHashMap<String, SimpleUser> map = new SimpleHashMap<String, SimpleUser>();
@@ -35,7 +36,7 @@ public class SimpleHashMapTest {
     public void delete() {
         assertThat(map.get("Первый"), is(one));
         map.delete("Первый");
-        assertThat(map.get("Первый"), is(nullValue()));
+        assertNull(map.get("Первый"));
         assertThat(map.size(), is(2));
     }
 

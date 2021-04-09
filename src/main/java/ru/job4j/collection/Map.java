@@ -1,6 +1,8 @@
 package ru.job4j.collection;
 
-public interface Map<K, V> extends Iterable<V> {
+import java.util.Iterator;
+
+public interface Map<K, V> extends Iterable<K> {
     boolean insert(K key, V value);
 
     boolean delete(K key);
@@ -8,4 +10,7 @@ public interface Map<K, V> extends Iterable<V> {
     V get(K key);
 
     int size();
+
+    @Override
+    Iterator<K> iterator();
 }

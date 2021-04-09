@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
  * @param <V>
  */
 public class SimpleHashMap<K, V> implements Map<K, V> {
-    private int capaCity = 16; // по идеи это размер массива
+    private int capaCity = 16; // это размер массива
     private Node<K, V>[] hashtable = new Node[capaCity];
     private int size = 0; // Количество элементов HashMap-а;
     private int modCount = 0; // сколько раз коллекция была изменена с момента ее создания
@@ -31,16 +31,20 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     @Override
     public boolean insert(K key, V value) {
         boolean rsl = false;
-        int keyHash = hash(key);
-
-        if (size == this.capaCity) {
-            arrayDouble();
+        int index = indexKey(key);
+        System.out.println("index: =" + index);
+        if (size / this.capaCity > 0.75) {
+            resize();
         }
-        if (!checkHashTable(key)) {
-            rsl = add(keyHash, value, indexKey(key));
-        } else {
-            rsl = add(keyHash, value, freeIndex());
+        if (hashtable[index] != null && !hashtable[index].getKey().equals(key)) {
+            System.out.println("false--: зашел в If");
+            return rsl;
         }
+        System.out.println("dobavlenie: " + index);
+        add(index, key, value);
+        size++;
+        modCount++;
+        rsl = true;
         return rsl;
     }
 
@@ -53,8 +57,13 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     @Override
     public boolean delete(K key) {
         boolean rsl = false;
-        if (checkHashTable(key)) {
-            hashtable[indexKey(key)] = null;
+        int index = indexKey(key);
+        if (!compareNode(index, key) || hashtable[index] == null) {
+            return rsl;
+        }
+        if (compareNode(index, key)) {
+            hashtable[index] = null;
+            modCount++;
             size--;
             rsl = true;
         }
@@ -71,33 +80,27 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     public V get(K key) {
         V v = null;
         int index = indexKey(key);
-        if (checkHashTable(key)) {
-            if (compareHash(index, key)) {
-                v = (V) hashtable[index].getValue();
-            } else {
-                v = getFromTable(key);
-            }
+        if (hashtable[index] == null
+                || !hashtable[index].getKey().equals(key)) {
+            return null;
         }
-        return v;
-    }
-
-    /**
-     * Определяет позицию в массиве куда будет помещен элемент
-     * окончательный индекс(бакет)
-     *
-     * @param key ключ
-     * @return int число бакета
-     */
-    private int indexKey(K key) {
-        return hash(key) & (capaCity - 1);
+        return hashtable[index].getValue();
     }
 
     /**
      * Метод проводит удваивание массива путем перекопировани
      * и увеличения при достижении порогового значения
      */
-    private void arrayDouble() {
-        hashtable = Arrays.copyOf(hashtable, capaCity * 2);
+    private Node<K, V>[] resize() {
+        capaCity = capaCity * 2;
+        Node<K, V>[] newhashtable = new Node[capaCity];
+        for (Node<K, V> node : hashtable) {
+            if (node != null) {
+                int index = indexKey(node.getKey());
+                newhashtable[index] = node;
+            }
+        }
+        return newhashtable;
     }
 
     /**
@@ -112,53 +115,13 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     /**
      * Метод проводит создание и встаку Node
      *
-     * @param hash  результат работы метода hash()
      * @param value значение
      * @param index итоговый индекс в бакете
      * @return
      */
-    private boolean add(int hash, V value, int index) {
-        hashtable[index] = new Node<>(hash, value);
-        this.size++;
+    private boolean add(int index, K key, V value) {
+        hashtable[index] = new Node<>(key, value);
         return true;
-    }
-
-    /**
-     * Метод прроверяет на присутствие key в hashtable
-     *
-     * @param key - Ключ
-     * @return Обнаружен key с таким значениме - true, нет - false.
-     */
-    private boolean checkHashTable(K key) {
-        int index = hash(key);
-        boolean rsl = false;
-        if (size > 0) {
-            for (Node node : hashtable) {
-                if (node != null && node.getHash() == index) {
-                    rsl = true;
-                    break;
-                }
-            }
-        }
-        return rsl;
-    }
-
-    /**
-     * Метод помогает избегать лишних вложености в методе: V get(key)
-     * Осуществляет поиск по всему массиву, в случаии колизии.
-     *
-     * @return V value or null
-     */
-    private V getFromTable(K key) {
-        V v = null;
-        for (int i = 0; i < hashtable.length; i++) {
-            if (compareHash(i, key)) {
-                v = (V) hashtable[i].getValue();
-                break;
-            }
-        }
-
-        return v;
     }
 
     /**
@@ -169,8 +132,22 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
      * @param key   ключ
      * @return true or false
      */
-    private boolean compareHash(int index, K key) {
-        return hashtable[index].getHash() == hash(key);
+    private boolean compareNode(int index, K key) {
+        K key1 = hashtable[index].getKey();
+        return (key1.hashCode() == key.hashCode() && key1.equals(key));
+    }
+
+    /**
+     * Определяет позицию в массиве куда будет помещен элемент
+     * окончательный индекс(бакет)
+     *
+     * @param key ключ
+     * @return int число бакета
+     */
+    private int indexKey(K key) {
+        int etr = hash(key) & (capaCity - 1);
+        System.out.println("LastIndex=" + etr);
+        return etr;
     }
 
     /**
@@ -183,18 +160,9 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     private int hash(K key) {
         int rsl = 31;
         rsl = rsl * key.hashCode();
-        return rsl % (hashtable.length - 1);
-    }
-
-    private int freeIndex() {
-        int rsl = -1;
-        for (int i = 0; i < this.capaCity; i++) {
-            if (hashtable[i] == null) {
-                rsl = i;
-                break;
-            }
-        }
-        return rsl;
+        int ty = rsl % (hashtable.length - 1);
+        System.out.println("Hash=" + ty);
+        return ty;
     }
 
     /**
@@ -204,16 +172,16 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
      * @param <V> значение храниемое по ключу
      */
     private static class Node<K, V> {
-        private int hash;
+        private K key;
         private V value;
 
-        public Node(int hash, V value) {
-            this.hash = hash;
+        public Node(K key, V value) {
+            this.key = key;
             this.value = value;
         }
 
-        private int getHash() {
-            return hash;
+        private K getKey() {
+            return key;
         }
 
         private V getValue() {
@@ -223,36 +191,38 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
         @Override
         public String toString() {
             return new StringJoiner(", ", Node.class.getSimpleName() + "[", "]")
-                    .add("hash=" + hash)
+                    .add("key=" + key)
                     .add("value=" + value)
                     .toString();
         }
     }
 
     @Override
-    public Iterator<V> iterator() {
+    public Iterator<K> iterator() {
         return new Iterator<>() {
-            private int position = 0;
+            private int position = modCount;
+            private int count = 0;
 
             @Override
             public boolean hasNext() {
-                var result = false;
-                for (int i = position; i < hashtable.length; i++) {
-                    if (hashtable[i] != null) {
-                        position = i;
-                        result = true;
-                        break;
-                    }
+                if (position != modCount) {
+                    throw new ConcurrentModificationException();
                 }
-                return result;
+                return count < size;
             }
 
             @Override
-            public V next() {
+            public K next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (V) hashtable[position++].getValue();
+                for (int i = count; i < capaCity; i++) {
+                    if (hashtable[i] != null) {
+                        count++;
+                        return hashtable[i].getKey();
+                    }
+                }
+                return null;
             }
         };
     }
@@ -275,11 +245,15 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
         siMap.insert(11235, 14);
         siMap.insert(17, 17);
         Iterator<Integer> iter = siMap.iterator();
-        while (iter.hasNext()) {
+     /*   while (iter.hasNext()) {
 
             System.out.println("Значение ключа равно: " + iter.next());
 
-        }
+        }*/
+        siMap.delete(17);
         System.out.println(siMap.size());
+        System.out.println(siMap);
+        siMap.delete(122);
+        System.out.println(siMap);
     }
 }
