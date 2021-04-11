@@ -19,7 +19,7 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     private Node<K, V>[] hashtable = new Node[capaCity];
     private int size = 0; // Количество элементов HashMap-а;
     private int modCount = 0; // сколько раз коллекция была изменена с момента ее создания
-    private float loadFactor = 0.75f; // коэффициент загрузки / в данном заднии не используется
+    private final float loadFactor = 0.75f; // коэффициент загрузки / в данном заднии не используется
 
     /**
      * Метод проводит вставку пары ключ-значение
@@ -31,11 +31,12 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     @Override
     public boolean insert(K key, V value) {
         boolean rsl = false;
-        int index = indexKey(key);
-        System.out.println("index: =" + index);
-        if (size / this.capaCity > 0.75) {
+
+        if (size > loadFactor * this.capaCity) {
             resize();
         }
+        int index = indexKey(key);
+        System.out.println("index: =" + index);
         if (hashtable[index] != null && !hashtable[index].getKey().equals(key)) {
             System.out.println("false--: зашел в If");
             return rsl;
@@ -56,18 +57,15 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public boolean delete(K key) {
-        boolean rsl = false;
+
         int index = indexKey(key);
-        if (!compareNode(index, key) || hashtable[index] == null) {
-            return rsl;
+        if (hashtable[index] == null || !compareNode(index, key)) {
+            return false;
         }
-        if (compareNode(index, key)) {
-            hashtable[index] = null;
-            modCount++;
-            size--;
-            rsl = true;
-        }
-        return rsl;
+        hashtable[index] = null;
+        modCount++;
+        size--;
+        return true;
     }
 
     /**
@@ -200,12 +198,13 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
     @Override
     public Iterator<K> iterator() {
         return new Iterator<>() {
-            private int position = modCount;
+            private int modi = modCount;
             private int count = 0;
+            private int lastpos = 0;
 
             @Override
             public boolean hasNext() {
-                if (position != modCount) {
+                if (modi != modCount) {
                     throw new ConcurrentModificationException();
                 }
                 return count < size;
@@ -216,10 +215,13 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                for (int i = count; i < capaCity; i++) {
-                    if (hashtable[i] != null) {
+
+                for (int ind = lastpos; ind < capaCity; ind++) {
+                    System.out.println("Текущий индекс в ФОре: " + ind);
+                    if (hashtable[ind] != null) {
+                        lastpos = 1 + ind;
                         count++;
-                        return hashtable[i].getKey();
+                        return hashtable[ind].getKey();
                     }
                 }
                 return null;
@@ -245,15 +247,16 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
         siMap.insert(11235, 14);
         siMap.insert(17, 17);
         Iterator<Integer> iter = siMap.iterator();
-     /*   while (iter.hasNext()) {
+      while (iter.hasNext()) {
 
             System.out.println("Значение ключа равно: " + iter.next());
 
-        }*/
-        siMap.delete(17);
+        }
+      /*  siMap.delete(17);
         System.out.println(siMap.size());
         System.out.println(siMap);
-        siMap.delete(122);
+        siMap.delete(122);*/
         System.out.println(siMap);
     }
+
 }
