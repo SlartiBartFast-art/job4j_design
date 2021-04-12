@@ -31,22 +31,15 @@ public class SimpleTree<E> implements Tree<E> {
     public boolean add(E parent, E child) {
         boolean rsl = false;
         var node = findBy(parent); // получили узер по значение Родитель (обернут Опционал)
-        // через метод перестраховывемся и указываем что вывести в случае если Опционал пуст
-      /*/ return node.map(elm -> {
-            return elm;
-        } ).orElse(null);*/
-
-        if (node.isPresent()) {
-            var etr = node.get();
-            //Если child есть, то метод должен вернуть false
-            for (Node n : etr.children) {
-                if (n.value.equals(child)) {
-                    return rsl;
-                }
+        //Отсутствие child нужно проверить во всем дереве. Для этого также нужно использовать findBy()
+        var childRes = findBy(child);
+        if (childRes.isEmpty()) {
+            if (node.isPresent()) {
+                var etr = node.get();
+                etr.children.add(new Node<>(child));
+                rsl = true;
+                return rsl;
             }
-            etr.children.add(new Node<E>(child));
-            rsl = true;
-            return rsl;
         }
         return rsl;
     }
@@ -100,6 +93,7 @@ public class SimpleTree<E> implements Tree<E> {
     //TODO методы isBinary() и findBy() идентичны.
     // Ваша задача отрефакторить код, создав вспомогательный метод.
     // Это метод уже использовать в методах isBinary() и findBy()
+
     /**
      * @param condition
      * @return
