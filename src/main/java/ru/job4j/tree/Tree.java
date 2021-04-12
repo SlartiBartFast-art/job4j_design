@@ -7,6 +7,8 @@ import java.util.StringJoiner;
 
 /**
  * Создать элементарную структуру дерева [#471689]
+ * 2. Добавить метод boolean isBinary() [#471690]
+ *
  * @param <E>
  */
 public interface Tree<E> {
@@ -15,9 +17,12 @@ public interface Tree<E> {
 
     Optional<Node<E>> findBy(E value);
 
+    boolean isBinary();
+
     /**
      * Класс Node описывает узел дерева.
      * Узел содержит хранимое значение и ссылки на дочерние узлы.
+     *
      * @param <E>
      */
     class Node<E> { // описывает узел дерева

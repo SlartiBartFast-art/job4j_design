@@ -1,10 +1,13 @@
 package ru.job4j.tree;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Создать элементарную структуру дерева [#471689]
  * По заданию в дереве не могут храниться дубликаты.
+ * 2. Добавить метод boolean isBinary() [#471690]
+ * метод должен циклически пройти по всем элементам дерева, аналогично методу findBy
  *
  * @param <E>
  */
@@ -19,6 +22,7 @@ public class SimpleTree<E> implements Tree<E> {
      * Должен находить узел по значению parent и добавлять в него дочерний узел со значением child.
      * В этом методе нужно проверить, что значения child еще нет в дереве а parent есть.
      * Если child есть, то метод должен вернуть false.
+     *
      * @param parent искомый ключ
      * @param child  ключ для добавления
      * @return
@@ -28,31 +32,42 @@ public class SimpleTree<E> implements Tree<E> {
         boolean rsl = false;
         var node = findBy(parent); // получили узер по значение Родитель (обернут Опционал)
         // через метод перестраховывемся и указываем что вывести в случае если Опционал пуст
-        var etr = node.orElse(null);
-        if (etr == null) { // получить false т.к. объект Опционал пуст
+      /*/ return node.map(elm -> {
+            return elm;
+        } ).orElse(null);*/
+
+        if (node.isPresent()) {
+            var etr = node.get();
+            //Если child есть, то метод должен вернуть false
+            for (Node n : etr.children) {
+                if (n.value.equals(child)) {
+                    return rsl;
+                }
+            }
+            etr.children.add(new Node<E>(child));
+            rsl = true;
             return rsl;
         }
-        //Если child есть, то метод должен вернуть false
-        for (Node n : etr.children) {
-            if (n.value.equals(child)) {
-                return rsl;
-            }
-        }
-
-        // добавить в него узел со значением child
-        etr.children.add(new Node<E>(child));
-        rsl = true;
         return rsl;
     }
 
     /**
      * Метод алгоритм обхода в ширину SimpleTree
+     *
      * @param value искомое значение
      * @return объект типа Optional в котором содержиться экземпляр значения Node или null
      */
     @Override
     public Optional<Node<E>> findBy(E value) {
-        Optional<Node<E>> rsl = Optional.empty(); // создаем пустой опционал объект
+        E e = value;
+        Optional<Node<E>> rsl = findByPredicate(el -> el.value.equals(e));
+
+        return rsl;
+    }
+
+  /*  @Override
+    public Optional<Node<E>> findBy(E value) {
+        Optional<Node<E>> rsl = Optional.empty(); // создаем пустой экземпляр Optional объект
         Queue<Node<E>> data = new LinkedList<>();
         // Метод offer (E e) интерфейса  Queue (очереди) вставляет указанный элемент в эту очередь,
         // если это можно сделать немедленно, не нарушая ограничения по емкости.
@@ -69,6 +84,39 @@ public class SimpleTree<E> implements Tree<E> {
             data.addAll(el.children);
         }
         return rsl;
+    }*/
+
+    /**
+     * Метод должен проверять количество дочерних элементов в дереве.
+     * Если их > 2 - то дерево не бинарное
+     *
+     * @return
+     */
+    @Override
+    public boolean isBinary() {
+        return findByPredicate(el -> el.children.size() > 2).isEmpty();
+    }
+
+    //TODO методы isBinary() и findBy() идентичны.
+    // Ваша задача отрефакторить код, создав вспомогательный метод.
+    // Это метод уже использовать в методах isBinary() и findBy()
+    /**
+     * @param condition
+     * @return
+     */
+    private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
+        Optional<Node<E>> nodeOptional = Optional.empty();
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (condition.test(el)) {
+                nodeOptional = Optional.of(el);
+                break;
+            }
+            data.addAll(el.children);
+        }
+        return nodeOptional;
     }
 
     @Override
@@ -89,4 +137,5 @@ public class SimpleTree<E> implements Tree<E> {
         boolean tir = tree.add(7, 5);
         System.out.println(tir);
     }
+
 }
