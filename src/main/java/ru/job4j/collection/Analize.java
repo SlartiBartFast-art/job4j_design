@@ -1,0 +1,119 @@
+package ru.job4j.collection;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * 2. Статистику по коллекции. [#471665]
+ * определению разницы между начальным состояние массива и измененным.
+ * Нужно понять:
+ * Сколько добавлено новых пользователей.
+ * Сколько изменено пользователей. Изменённым считается объект в котором изменилось имя. а id осталось прежним.
+ * Сколько удалено пользователей.
+ */
+public class Analize {
+
+    /**
+     * метод должен возвращать статистику об изменении коллекции.
+     *
+     * @param previous List<User> previous - начальные данные, // 1 10 13 4 5
+     * @param current  List<User> current - измененные данные. // 1 13 4
+     * @return
+     */
+    public Info diff(List<User> previous, List<User> current) {
+        Info info = new Info();
+        if (current.containsAll(previous)) { // в случае полного совпадения коллекций
+            info.added = previous.size();
+            info.changed = 0;
+            info.deleted = 0;
+            return info;
+        }
+        HashMap<Integer, User> current1 = new HashMap<>();
+        for (User u : current) {
+            current1.put(u.id, u);
+        }
+        List<User> prev = new ArrayList<>(previous);
+        List<User> curr = new ArrayList<>(current);
+        prev.removeAll(curr);
+
+        for (User user : prev) {
+            if (current1.containsKey(user.id)) {
+                info.changed++;
+            } else {
+                info.deleted++;
+            }
+
+        }
+        info.added = current.size() - (previous.size() - info.deleted);
+        return info;
+    }
+
+    public static class User {
+        private int id;
+        private String name;
+
+        public User(int i, String name) {
+            this.id = i;
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
+                    .add("id=" + id)
+                    .add("name='" + name + "'")
+                    .toString();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            User user = (User) o;
+            return id == user.id
+                    && Objects.equals(name, user.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, name);
+        }
+
+    }
+
+    public static class Info {
+         int added; // сколько добавлено новых пользователей
+         int changed; // Сколько изменено пользователей.
+          int deleted; //Сколько удалено пользователей.
+
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", Info.class.getSimpleName() + "[", "]")
+                    .add("added=" + added)
+                    .add("changed=" + changed)
+                    .add("deleted=" + deleted)
+                    .toString();
+        }
+    }
+
+    public static void main(String[] args) {
+        List<User> userList1  = new ArrayList<>();
+        List<User> userList2 = new ArrayList<>();
+        userList1.add(new User(1, "Petr"));
+        userList1.add(new User(2, "gert"));
+        userList1.add(new User(3, "Fedor"));
+        userList1.add(new User(4, "Egor"));
+        userList1.add(new User(5, "Retor"));
+        userList2.add(new User(1, "Ivan"));
+        userList2.add(new User(2, "gert"));
+        userList2.add(new User(3, "Petr"));
+        userList2.add(new User(41, "Uio"));
+        Analize analize = new Analize();
+        var toi = analize.diff(userList1, userList2);
+        System.out.println("Itogo: " + toi);
+    }
+}
