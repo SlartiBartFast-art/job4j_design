@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Сколько удалено пользователей.
  */
 public class Analize {
+    private int count = 0;
 
     /**
      * метод должен возвращать статистику об изменении коллекции.
@@ -22,29 +23,24 @@ public class Analize {
      */
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        if (current.containsAll(previous)) { // в случае полного совпадения коллекций
-            info.added = previous.size();
-            info.changed = 0;
-            info.deleted = 0;
-            return info;
-        }
+
         HashMap<Integer, User> current1 = new HashMap<>();
         for (User u : current) {
             current1.put(u.id, u);
         }
-        List<User> prev = new ArrayList<>(previous);
-        List<User> curr = new ArrayList<>(current);
-        prev.removeAll(curr);
-
-        for (User user : prev) {
-            if (current1.containsKey(user.id)) {
-                info.changed++;
-            } else {
-                info.deleted++;
+        for (User user : previous) {
+            if (current1.containsKey(user.id) && current1.get(user.id).equals(user)) { // current1.containsValue(user)) {
+                count++;
+                System.out.println("transporte: " + count);
             }
-
+            if (current1.containsKey(user.id) && !current1.get(user.id).equals(user)) { //current1.containsValue(user)
+                info.changed++;
+                System.out.println("change: " + info.changed);
+            }
         }
-        info.added = current.size() - (previous.size() - info.deleted);
+
+        info.deleted = previous.size() - info.changed - count;
+        info.added = current.size() - (info.changed + count);
         return info;
     }
 
@@ -86,9 +82,9 @@ public class Analize {
     }
 
     public static class Info {
-         int added; // сколько добавлено новых пользователей
-         int changed; // Сколько изменено пользователей.
-          int deleted; //Сколько удалено пользователей.
+        int added; // сколько добавлено новых пользователей
+        int changed; // Сколько изменено пользователей.
+        int deleted; //Сколько удалено пользователей.
 
         @Override
         public String toString() {
@@ -98,10 +94,11 @@ public class Analize {
                     .add("deleted=" + deleted)
                     .toString();
         }
+
     }
 
     public static void main(String[] args) {
-        List<User> userList1  = new ArrayList<>();
+        List<User> userList1 = new ArrayList<>();
         List<User> userList2 = new ArrayList<>();
         userList1.add(new User(1, "Petr"));
         userList1.add(new User(2, "gert"));

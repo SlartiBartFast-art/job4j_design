@@ -59,6 +59,6 @@ public class AnalizeTest {
 
         Analize analize = new Analize();
         var tr = analize.diff(userList1, userList2);
-        assertThat(tr. toString(),  is("Info[added=5, changed=0, deleted=0]"));
+        assertThat(tr. toString(),  is("Info[added=0, changed=0, deleted=0]"));
     }
 }
