@@ -42,9 +42,10 @@ public class LogFilter {
         try (PrintWriter printWriter = new PrintWriter(new BufferedOutputStream(new FileOutputStream("writeLog.txt")))) {
             saveLog.forEach(x -> printWriter.printf("%s%n", x));
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         string = "writeLog.txt";
         return string; // записать название файла
     }
