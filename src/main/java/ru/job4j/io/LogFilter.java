@@ -32,27 +32,21 @@ public class LogFilter {
 
     /**
      * Метод записывает результаты фильтрации в файл
-     * @param log название файла в коротом нужно провести фильтрацию
-     * @return название файла в который будут записаны результаты фильтрации
+     * @param log отсортированная коллекция хранящаяя результаты работы метода filter(как пример)
+     * @param file название файлу куда необходимо записать отсортированную коллекцию
      */
-    public static String save(String log) {
-        String string;
-        List<String> saveLog;
-        saveLog = filter(log);
-        try (PrintWriter printWriter = new PrintWriter(new BufferedOutputStream(new FileOutputStream("writeLog.txt")))) {
-            saveLog.forEach(x -> printWriter.printf("%s%n", x));
+    public static void save(List<String> log, String file) {
+        try (PrintWriter printWriter = new PrintWriter(new BufferedOutputStream(new FileOutputStream(file)))) {
+            log.forEach(x -> printWriter.printf("%s%n", x));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        string = "writeLog.txt";
-        return string; // записать название файла
     }
 
     public static void main(String[] args) {
-        List<String> log = filter("log.txt");
+        List<String> log = filter("log.txt"); // результат работы filter
         System.out.println(log);
-        String string = save("log.txt");
+        save(log, "save.txt"); //результат работы save(созданный файл в корне проекта)
     }
 }
