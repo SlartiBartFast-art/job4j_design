@@ -45,12 +45,7 @@ public class Config {
      * @return значение value соотвествующее данному ключу в Map<String, String> values;
      */
     public String value(String key) {
-        for (var string : values.entrySet()) {
-            if (string.getKey().contains(key)) {
-                return string.getValue();
-            }
-        }
-        throw  new NoSuchElementException("there is no such element");
+        return values.get(key);
     }
 
     @Override
