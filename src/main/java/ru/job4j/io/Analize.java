@@ -22,7 +22,7 @@ public class Analize {
      * @param source - имя файла лога
      * @param target - имя файла после анализа.
      */
-    public void unavailable(String source, String target) {
+    public static void unavailable(String source, String target) {
         try (var buffer = new BufferedReader(new FileReader(source))) {
             String[] strings = new String[2];
             // отсортировать на у которых есть 400 500  скидать в файл таргет
