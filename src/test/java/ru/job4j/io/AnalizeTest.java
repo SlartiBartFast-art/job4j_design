@@ -50,7 +50,7 @@ public class AnalizeTest {
             //    Метод append() — обновляет значение объекта, который вызвал метод.
             //    Этот метод в Java принимает boolean, char, int, long, Strings и т.д.
         }
-        assertThat(rsl.toString(), is("500 10:56:01: 200 10:59:01" +
-                "500 11:01:01: 200 11:03:01"));
+        assertThat(rsl.toString(), is("10:56:01;10:59:01" +
+                "11:01:01;11:03:01"));
     }
 }
