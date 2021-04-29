@@ -3,9 +3,6 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 //TODO 1. Реализуйте метод unavailable.
 //source - имя файла лога
@@ -17,7 +14,7 @@ import java.util.regex.Pattern;
  * 2. Анализ доступности сервера. [#471727]
  * Метод main - записывает текст в файл "unavailable.csv" *
  */
-public class Analize {
+public class Analizy {
 
     /**
      * Метод anavailable должен находить диапазоны, когда сервер не работал
@@ -30,7 +27,6 @@ public class Analize {
         try (var buffer = new BufferedReader(new FileReader(source))) {
             String[] strings = new String[2];
             List<String> list = new ArrayList<>();
-            AtomicInteger index = new AtomicInteger();
             // отсортировать на у которых есть 400 500  скидать в файл таргет
             buffer.lines().forEach(split -> {
                 if (strings[0] == null && (split.contains("400") || split.contains("500"))) {
@@ -49,8 +45,7 @@ public class Analize {
                     strings[1] = stroka1[1];
                 }
                 if (strings[0] != null && strings[1] != null) {
-
-                    list.add(index.getAndIncrement(), strings[0] + ";" + strings[1]);
+                    list.add(strings[0] + ";" + strings[1]);
                     System.out.println(list);
                     strings[0] = null;
                     strings[1] = null;
@@ -93,7 +88,7 @@ public class Analize {
             e.printStackTrace();
         }
 
-        Analize analize = new Analize();
+        Analizy analize = new Analizy();
         analize.unavailable("unavailable.txt", "targetFile.txt");
     }
 }

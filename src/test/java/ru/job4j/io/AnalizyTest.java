@@ -1,7 +1,5 @@
 package ru.job4j.io;
 
-import static org.junit.Assert.*;
-
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 //аннотация на потобе Before только она едения для все тестов
@@ -18,7 +16,7 @@ import java.io.*;
  * Вернитесь к задаче "2. Анализ доступности сервера".
  * Создайте на код тесты с классом TemporaryFolder.
  */
-public class AnalizeTest {
+public class AnalizyTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -41,7 +39,7 @@ public class AnalizeTest {
         // то она просто возвращает путь к текущему файловому объекту.
         //Analize.unavailable - вызом метода через объект где этот метод прописан.
         //метод в таком случе д.б. static для участия в тесте
-        Analize.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
+        Analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
         //чтобы узнать каков итог работы метода, код ниже
         StringBuilder rsl = new StringBuilder();
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {

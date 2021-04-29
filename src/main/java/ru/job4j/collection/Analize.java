@@ -83,17 +83,8 @@ public class Analize {
 
     public static class Info {
         private int added; // сколько добавлено новых пользователей
-       private int changed; // Сколько изменено пользователей.
+        private int changed; // Сколько изменено пользователей.
         private int deleted; //Сколько удалено пользователей.
-
-        @Override
-        public String toString() {
-            return new StringJoiner(", ", Info.class.getSimpleName() + "[", "]")
-                    .add("added=" + added)
-                    .add("changed=" + changed)
-                    .add("deleted=" + deleted)
-                    .toString();
-        }
 
         public int getAdded() {
             return added;
@@ -117,6 +108,15 @@ public class Analize {
 
         public void setDeleted(int deleted) {
             this.deleted = deleted;
+        }
+
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", Info.class.getSimpleName() + "[", "]")
+                    .add("added=" + added)
+                    .add("changed=" + changed)
+                    .add("deleted=" + deleted)
+                    .toString();
         }
     }
 
