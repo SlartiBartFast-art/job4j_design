@@ -7,10 +7,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.*;
 
-
 public class SimpleHashMapTest {
 
-    private SimpleHashMap<String, SimpleUser> map = new SimpleHashMap<String, SimpleUser>();
+    private SimpleHashMap<String, SimpleUser> map = new SimpleHashMap<>();
     private SimpleUser one = new SimpleUser("Petr", 2);
     private SimpleUser two = new SimpleUser("Ivan", 3);
     private SimpleUser three = new SimpleUser("Fedor", 5);
@@ -47,8 +46,6 @@ public class SimpleHashMapTest {
         map1.insert(35, "two");
         map1.insert(315, "three");
         map1.insert(317, "five");
-
-
         assertThat(map1.get(35), is("two"));
         assertThat(map1.get(315), is("three"));
     }

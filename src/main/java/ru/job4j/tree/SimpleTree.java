@@ -25,7 +25,7 @@ public class SimpleTree<E> implements Tree<E> {
      *
      * @param parent искомый ключ
      * @param child  ключ для добавления
-     * @return
+     * @return true or false
      */
     @Override
     public boolean add(E parent, E child) {
@@ -36,7 +36,7 @@ public class SimpleTree<E> implements Tree<E> {
         if (childRes.isEmpty()) {
             if (node.isPresent()) {
                 var etr = node.get();
-                etr.children.add(new Node<>(child));
+                etr.getChildren().add(new Node<>(child));
                 rsl = true;
                 return rsl;
             }
@@ -53,7 +53,7 @@ public class SimpleTree<E> implements Tree<E> {
     @Override
     public Optional<Node<E>> findBy(E value) {
         E e = value;
-        Optional<Node<E>> rsl = findByPredicate(el -> el.value.equals(e));
+        Optional<Node<E>> rsl = findByPredicate(el -> el.getValue().equals(e));
 
         return rsl;
     }
@@ -83,21 +83,16 @@ public class SimpleTree<E> implements Tree<E> {
      * Метод должен проверять количество дочерних элементов в дереве.
      * Если их > 2 - то дерево не бинарное
      *
-     * @return
+     * @return true or false
      */
     @Override
     public boolean isBinary() {
-        return findByPredicate(el -> el.children.size() > 2).isEmpty();
+        return findByPredicate(el -> el.getChildren().size() > 2).isEmpty();
     }
 
     //TODO методы isBinary() и findBy() идентичны.
     // Ваша задача отрефакторить код, создав вспомогательный метод.
     // Это метод уже использовать в методах isBinary() и findBy()
-
-    /**
-     * @param condition
-     * @return
-     */
     private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
         Optional<Node<E>> nodeOptional = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
@@ -108,7 +103,7 @@ public class SimpleTree<E> implements Tree<E> {
                 nodeOptional = Optional.of(el);
                 break;
             }
-            data.addAll(el.children);
+            data.addAll(el.getChildren());
         }
         return nodeOptional;
     }

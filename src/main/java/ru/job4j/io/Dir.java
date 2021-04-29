@@ -26,19 +26,13 @@ public class Dir {
         //            System.out.println(subfile.getAbsoluteFile());
         //        }
         for (File subfile : file.listFiles()) { // вариант 2
-           // System.out.println(String.format("length : %s", subfile.length()));
-          //  File string = subfile.getAbsoluteFile();
+            // System.out.println(String.format("length : %s", subfile.length()));
             System.out.println("new dir: " + subfile);
             String[] rsl = subfile.list();
             for (int i = 0; i < rsl.length; i++) {
                 System.out.println("file name: " + rsl[i]);
                 System.out.println("file length: " + rsl[i].length());
             }
-
-       /* for (File subfile : file.listFiles()) { // вариант 3 список директороий
-            System.out.println(String.format("length : %s", subfile.length()));
-            System.out.println(String.format("name : %s", subfile));
-        }*/
         }
     }
 }

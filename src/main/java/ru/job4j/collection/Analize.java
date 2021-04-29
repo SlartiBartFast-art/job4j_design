@@ -19,7 +19,7 @@ public class Analize {
      *
      * @param previous List<User> previous - начальные данные, // 1 10 13 4 5
      * @param current  List<User> current - измененные данные. // 1 13 4
-     * @return
+     * @return объект класса Info
      */
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
@@ -82,9 +82,9 @@ public class Analize {
     }
 
     public static class Info {
-        int added; // сколько добавлено новых пользователей
-        int changed; // Сколько изменено пользователей.
-        int deleted; //Сколько удалено пользователей.
+        private int added; // сколько добавлено новых пользователей
+       private int changed; // Сколько изменено пользователей.
+        private int deleted; //Сколько удалено пользователей.
 
         @Override
         public String toString() {
@@ -95,6 +95,29 @@ public class Analize {
                     .toString();
         }
 
+        public int getAdded() {
+            return added;
+        }
+
+        public void setAdded(int added) {
+            this.added = added;
+        }
+
+        public int getChanged() {
+            return changed;
+        }
+
+        public void setChanged(int changed) {
+            this.changed = changed;
+        }
+
+        public int getDeleted() {
+            return deleted;
+        }
+
+        public void setDeleted(int deleted) {
+            this.deleted = deleted;
+        }
     }
 
     public static void main(String[] args) {
