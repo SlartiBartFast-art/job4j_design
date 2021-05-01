@@ -19,6 +19,7 @@ public class Search {
       //выводит все абсолютный путь все файлов дирректории
        Files.walkFileTree(start, new PrintFiles());*/
         Path start = Paths.get(".");
+        Predicate<Path> test  = p -> p.toFile().getName().endsWith("js");
         search(start, p -> p.toFile().getName().endsWith("js")).forEach(System.out::println);
     }
 
