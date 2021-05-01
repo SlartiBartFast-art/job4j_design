@@ -7,6 +7,12 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * 4.2. Поиск дубликатов [#471725]
+ * Нужно написать программу, которая принимает на вход папку, просматривает все файлы в ней
+ * (и всех подпапках и под-под-...папках) и сообщает, если находит дубликаты.
+ * Дубликаты – это два файла с одинаковым именем и размером.
+ */
 public class DuplicatesFinder {
     public static void main(String[] args) throws IOException {
         /* Files.walkFileTree(Path.of("./"), new DuplicatesVisitor());*/

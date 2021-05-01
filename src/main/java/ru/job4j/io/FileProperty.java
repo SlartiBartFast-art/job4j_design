@@ -3,6 +3,10 @@ package ru.job4j.io;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+/**
+ * 4.2. Поиск дубликатов [#471725]
+ * Модель данных - описывается двумя свойствами: размером и именем.
+ */
 public class FileProperty {
     private long size;
     private String name;

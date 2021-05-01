@@ -12,15 +12,31 @@ import java.util.function.Predicate;
  * Разработайте программу Search, которая будет искать файлы
  * только по определенному предикату.
  * программа должна вернуть файлы с расширением js.
+ * 5. Валидация параметров запуска. [#471719]
+ * Изменить программу, чтобы начальная папка передавалась через аргументы запуска.
+ * Доработайте программу ru.job4j.io.Search. Программа должна запускаться с параметрами.
+ * Первый параметр - начальная папка.
+ * Второй параметр - расширение файлов, которые нужно искать.
  */
 public class Search {
     public static void main(String[] args) throws IOException {
       /* Path start = Paths.get("."); // текущая директория
       //выводит все абсолютный путь все файлов дирректории
        Files.walkFileTree(start, new PrintFiles());*/
+        if (args[0] == null) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar Search.jar ROOT_FOLDER.");
+        }
+        if (args[1] == null) {
+            throw new IllegalArgumentException("File extension not specified. Usage java -jar Search.jar");
+        }
+        Path start = Paths.get(args[0]);
+        String string = args[1];
+        Predicate<Path> test = p -> p.toFile().getName().endsWith(string);
+        search(start, test).forEach(System.out::println);
+        /*Path start = Paths.get(".");
+         String string = "js";
         Path start = Paths.get(".");
-        Predicate<Path> test  = p -> p.toFile().getName().endsWith("js");
-        search(start, p -> p.toFile().getName().endsWith("js")).forEach(System.out::println);
+        search(start, p -> p.toFile().getName().endsWith("js")).forEach(System.out::println);*/
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {

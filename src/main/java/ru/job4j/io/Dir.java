@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class Dir {
     public static void main(String[] args) {
         File file = new File("c:\\projects");
+        //File file = new File(args[0]);
         //1. Проверяем, что файл существует.
         if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
@@ -20,11 +21,11 @@ public class Dir {
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
         }
-        //3. Получаем список файлов в этой директории.
-        //System.out.println(String.format("size : %s", file.getTotalSpace()));
-        //for (File subfile : file.listFiles()) {
-        //            System.out.println(subfile.getAbsoluteFile());
-        //        }
+        /*3. Получаем список файлов в этой директории.
+        System.out.println(String.format("size : %s", file.getTotalSpace()));
+        for (File subfile : file.listFiles()) {
+                    System.out.println(subfile.getAbsoluteFile());
+                }*/
         for (File subfile : file.listFiles()) { // вариант 2
             // System.out.println(String.format("length : %s", subfile.length()));
             System.out.println("new dir: " + subfile);
