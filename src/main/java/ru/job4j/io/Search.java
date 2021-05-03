@@ -23,12 +23,15 @@ public class Search {
       /* Path start = Paths.get("."); // текущая директория
       //выводит все абсолютный путь все файлов дирректории
        Files.walkFileTree(start, new PrintFiles());*/
-        if (args[0] == null) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar Search.jar ROOT_FOLDER.");
+        }
+       /* if (args[0] == null) {
             throw new IllegalArgumentException("Root folder is null. Usage java -jar Search.jar ROOT_FOLDER.");
         }
         if (args[1] == null) {
             throw new IllegalArgumentException("File extension not specified. Usage java -jar Search.jar");
-        }
+        }*/
         Path start = Paths.get(args[0]);
         String string = args[1];
         Predicate<Path> test = p -> p.toFile().getName().endsWith(string);
