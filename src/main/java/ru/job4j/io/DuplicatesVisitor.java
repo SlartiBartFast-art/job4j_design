@@ -16,11 +16,11 @@ import java.util.*;
  */
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     private List<FileProperty> fileProperties;
-    private Set<FileProperty> sete;
+    private Set<FileProperty> setFileProp;
 
     public DuplicatesVisitor() {
         this.fileProperties = new ArrayList<>();
-        this.sete = new HashSet<>();
+        this.setFileProp = new HashSet<>();
     }
 
     public List<FileProperty> getFileProperties() {
@@ -29,9 +29,9 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        var peth = file.toAbsolutePath();
-        var tr = new FileProperty(Files.size(peth), peth.toFile().getName());
-        if (!sete.add(tr)) {
+        var path = file.toAbsolutePath();
+        var tr = new FileProperty(Files.size(path), path.toFile().getName());
+        if (!setFileProp.add(tr)) {
             fileProperties.add(tr);
         }
         //listPath.add(file.toAbsolutePath()); // добавили все файлы полностью строка пути в Лист
@@ -42,7 +42,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     public String toString() {
         return new StringJoiner(", ", DuplicatesVisitor.class.getSimpleName() + "[", "]")
                 .add("fileProperties=" + fileProperties)
-                .add("sete=" + sete)
+                .add("setFileProp=" + setFileProp)
                 .toString();
     }
 }
