@@ -1,19 +1,23 @@
 package ru.job4j.io;
 
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * 4.2. Поиск дубликатов [#471725]
  * Модель данных - описывается двумя свойствами: размером и именем.
+ * добавлено третье свойство путь до объекта
  */
 public class FileProperty {
     private long size;
     private String name;
+    private Path path;
 
-    public FileProperty(long size, String name) {
+    public FileProperty(long size, String name, Path path) {
         this.size = size;
         this.name = name;
+        this.path = path; // Paths.get(String.valueOf(path));
     }
 
     public long getSize() {
@@ -41,7 +45,8 @@ public class FileProperty {
             return false;
         }
         FileProperty that = (FileProperty) o;
-        return size == that.size && Objects.equals(name, that.name);
+        return size == that.size
+                && Objects.equals(name, that.name);
     }
 
     @Override
@@ -54,6 +59,7 @@ public class FileProperty {
         return new StringJoiner(", ", FileProperty.class.getSimpleName() + "[", "]")
                 .add("size=" + size)
                 .add("name='" + name + "'")
+                .add("path=" + path)
                 .toString();
     }
 }

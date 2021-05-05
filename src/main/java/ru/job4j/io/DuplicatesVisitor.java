@@ -1,10 +1,7 @@
 package ru.job4j.io;
 
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
@@ -29,8 +26,8 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        var path = file.toAbsolutePath();
-        var tr = new FileProperty(Files.size(path), path.toFile().getName());
+        Path path = file.toAbsolutePath();
+        var tr = new FileProperty(Files.size(path), path.toFile().getName(), path);
         if (!setFileProp.add(tr)) {
             fileProperties.add(tr);
         }
