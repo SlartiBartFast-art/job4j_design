@@ -22,8 +22,7 @@ public class ArgsName {
         if (args.length == 0) {
             throw new IllegalArgumentException();
         }
-
-        Arrays.stream(args).filter(p -> p.contains("Xmx") || p.contains("out")).forEach(p -> {
+        Arrays.stream(args).forEach(p -> {
             String[] str = p.substring(1).split("=");
             if (str.length < 2) {
                 throw new IllegalArgumentException();
