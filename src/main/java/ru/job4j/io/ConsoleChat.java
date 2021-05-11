@@ -44,6 +44,7 @@ public class ConsoleChat {
      * открывает ввод данных с клавиатуры и записывает весь диалог с ботом в фаил по ссылке path
      */
     public void run() {
+        getAnswerTxt();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
             String str;
             String f = "Добро пожаловать, введите ваш запрос! ";
@@ -81,11 +82,16 @@ public class ConsoleChat {
         replace(logAllTalks);
     }
 
+    /**
+     * Метод производить запись(логирование) всегод диалога между ботом и пользователем в фаил
+     * @param list принимает List<String> с фразами диалога
+     */
     private void replace(List<String> list) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             for (String string : list) {
-                bufferedWriter.write("\r\n");
-                bufferedWriter.write(string);
+                bufferedWriter.write(string + System.lineSeparator());
+               // bufferedWriter.write("\r\n");
+               // bufferedWriter.write(string);
             }
         } catch (IOException e) {
             e.printStackTrace();
