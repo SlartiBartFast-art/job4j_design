@@ -89,9 +89,8 @@ public class ConsoleChat {
     private void replace(List<String> list) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             for (String string : list) {
-                bufferedWriter.write(string + System.lineSeparator());
-               // bufferedWriter.write("\r\n");
-               // bufferedWriter.write(string);
+                bufferedWriter.write(string);
+                bufferedWriter.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,7 +106,7 @@ public class ConsoleChat {
         try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers))) {
             reader.lines().forEach(p -> {
                 // System.out.println(p);
-                answerTxt.add(p.substring(1));
+                answerTxt.add(p);
             });
         } catch (IOException e) {
             e.printStackTrace();
