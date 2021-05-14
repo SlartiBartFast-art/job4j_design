@@ -31,10 +31,15 @@ public class ServerSimple {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     out.write("HTTP/1.1 200 OK\r\n\n".getBytes());
-                    out.write("Hello, dear friend.".getBytes());
+
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
+                        if (str.contains("Hello")) {
+                            out.write("\r\n\n".getBytes());
+                            out.write("Hello, dear friend.".getBytes());
+                            out.flush();
+                        }
                         if (str.contains("Exit")) {
                             out.write("\r\n\n".getBytes());
                             out.write("Server is closed.".getBytes());
@@ -43,6 +48,7 @@ public class ServerSimple {
                         if (str.contains("What")) {
                             out.write("\r\n\n".getBytes());
                             out.write("What".getBytes());
+                            out.flush();
                         }
                     }
                 }
