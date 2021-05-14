@@ -12,7 +12,7 @@ public class UsageLog4j {
         LOG.info("info message");
         LOG.warn("warn message");
         LOG.error("error message");*/
-        String u = "Ivan Ivanov";
+        /*String u = "Ivan Ivanov";
         int a = 33;
         boolean b = true;
         byte v = 2;
@@ -23,11 +23,17 @@ public class UsageLog4j {
         char s = '\u0067';
 
         LOG.debug(
-                "u : {}, a : {}, b : {}, v : {}, l : {}, g : {}, f : {}, n : {}, s : {}", u, a, b, v, l, g, f, n, s);
+                "u : {}, a : {}, b : {}, v : {}, l : {}, g : {}, f : {}, n : {}, s : {}", u, a, b, v, l, g, f, n, s);*/
 
 //        LOG.debug("debug message - v : {}, l : {}", v, l);
 //        LOG.info("info message - g : {}, f : {}", g, f);
 //        LOG.warn("warn message");
 //        LOG.error("error message - u : {}, a : {}, b : {}", u, a, b);
+        try {
+            throw new Exception("Not supported code");
+        } catch (Exception e) {
+
+            LOG.error("Exception in log example", e);
+        }
     }
 }

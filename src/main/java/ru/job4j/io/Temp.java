@@ -39,6 +39,11 @@ public class Temp {
     }
 
     public static void main(String[] args) {
+        /* ServerSocket serverSocket = new ServerSocket(9000);
+        Socket clientSocket = serverSocket.accept();
+        clientSocket.getOutputStream().write("HTTP/1.1 200 OK\\r\\n\\".getBytes());
+        clientSocket.close();
+        serverSocket.close();*/
        /* System.out.print("primer chto zapiset");
        // String g = System.lineSeparator();
         //System.out.println(g);

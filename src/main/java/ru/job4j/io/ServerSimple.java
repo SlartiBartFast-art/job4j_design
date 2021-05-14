@@ -1,5 +1,8 @@
 package ru.job4j.io;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,12 +21,10 @@ import java.net.Socket;
  * msg=What > What.
  */
 public class ServerSimple {
-    public static void main(String[] args) throws IOException {
-      /* ServerSocket serverSocket = new ServerSocket(9000);
-        Socket clientSocket = serverSocket.accept();
-        clientSocket.getOutputStream().write("HTTP/1.1 200 OK\\r\\n\\".getBytes());
-        clientSocket.close();
-        serverSocket.close();*/
+    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
+
+    public static void main(String[] args) {
+
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
                 Socket socket = server.accept();
@@ -53,6 +54,8 @@ public class ServerSimple {
                     }
                 }
             }
+        } catch (IOException e) {
+            LOG.error("Error : ", e);
         }
     }
 }

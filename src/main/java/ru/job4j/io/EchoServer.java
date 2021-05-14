@@ -1,5 +1,7 @@
 package ru.job4j.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,7 +14,9 @@ import java.util.Scanner;
  * Если клиент отправлять запрос http://localhost:9000/?msg=BYE нужно завершить работу сервера.
  */
 public class EchoServer {
-    public static void main(String[] args) throws IOException {
+    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
+
+    public static void main(String[] args) {
         //блок трай-катч-висресур
         // создаем сокет на стороне сервера, с прослушиваемым портом 9000
         try (ServerSocket server = new ServerSocket(9000)) { // порт 9000 мб любой свободный
@@ -43,6 +47,8 @@ public class EchoServer {
                     }
                 }
             }
+        } catch (IOException e) {
+            LOG.error("Error : ", e);
         }
     }
 }
