@@ -120,7 +120,7 @@ public class ConsoleChat {
      * @return число в диапазоне длины List<String> answerTxt типа int
      */
     private int random() {
-        int max = (answerTxt.size() + 1);
+        int max = (answerTxt.size());
         return (int) (Math.random() * max);
     }
 
