@@ -26,8 +26,9 @@ public class EchoServer {
                  var out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
                  // открываем поток клиетского сокета в буфер для получения информации от клиента
             ) {
+                out.write("HTTP/1.1 200 OK\r\n\n");
+
                 while (!server.isClosed()) { // пока сервер принудительно не закроют
-                    out.write("HTTP/1.1 200 OK\r\n\n");
 
                     var done = false;
                     while (!done && in.hasNextLine()) {
