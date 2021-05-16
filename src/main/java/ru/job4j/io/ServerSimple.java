@@ -33,8 +33,8 @@ public class ServerSimple {
                              new InputStreamReader(socket.getInputStream()))) {
                     out.write("HTTP/1.1 200 OK\r\n\n".getBytes());
 
-                    String str;
-                    while (!(str = in.readLine()).isEmpty()) {
+                    String str = in.readLine();
+                    while (!(str.isEmpty())) {
                         System.out.println(str);
                         if (str.contains("Hello")) {
                             out.write("\r\n\n".getBytes());
@@ -51,6 +51,7 @@ public class ServerSimple {
                             out.write("What".getBytes());
                             out.flush();
                         }
+                        str = in.readLine();
                     }
                 }
             }
