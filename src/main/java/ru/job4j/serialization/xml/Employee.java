@@ -15,7 +15,7 @@ import java.io.StringWriter;
 import java.io.StringReader;
 
 /**
- *4. JAXB. Преобразование XML в POJO. [#471735]
+ * 4. JAXB. Преобразование XML в POJO. [#471735]
  * + вложенный класс ContactCard
  * Для того чтобы сериализовать и десериализовать нам нужно добавить аннотации JAXB,
  * которую дадут библиотеке информацию о том как парсить объект.
@@ -31,7 +31,7 @@ public class Employee {
     private int age;
 
     private ContactCard contact;
-
+    //@XmlElement - ставить или нет перед массивом - результат одинаковый и с ней и без нее
     private String[] statuses;
 
     public Employee() {
