@@ -1,0 +1,10 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<employee marriage="true" age="65">
+    <contact phone="3194805555" town="NewYork" street="QuensySt" house="125"/>
+    <statuses>
+        <statuses>Son</statuses>
+        <statuses>Father</statuses>
+        <statuses>Grandfather</statuses>
+        <statuses>retiree</statuses>
+    </statuses>
+</employee>
