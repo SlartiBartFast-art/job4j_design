@@ -6,12 +6,13 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 /**
- * 5.1. Именованные аргументы [#471724]
- * * В этом задании вам нужно будет написать программу,
- * * которая принимает массив параметров и разбивает их на пары: ключ, значение.
+ * Аналог задания 5.1. Именованные аргументы [#471724]
+ * часть сборки задания, Поиск файлов по критерию [#783 #158176]
+ * Класс принимает массив параметров и разбивает их на пары: ключ, значение.
  * * Exception - массив аргументов пуст, value - пусто
  */
 public class ArgsName {
+
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
@@ -59,10 +60,10 @@ public class ArgsName {
 
         ArgsName zip = ArgsName.of(new String[]{"-out=project.zip", "-encoding=UTF-8"});
         System.out.println(zip.get("out"));*/
-        ArgsName tmp = ArgsName.of(new String[]{"-d=c:/", "-n=*.txt", "-t=mask", "-o=log.txt"});
+       /* ArgsName tmp = ArgsName.of(new String[]{"-d=c:/", "-n=*.txt", "-t=mask", "-o=log.txt"});
         for (var st : tmp.values.entrySet()) {
             System.out.println(st);
-        }
+        }*/
     }
 }
 
