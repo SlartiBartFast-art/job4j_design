@@ -1,0 +1,1 @@
+insert into Employee(name, balance, insurance) values('Petr Arsentev', '1127.50', 'true');
