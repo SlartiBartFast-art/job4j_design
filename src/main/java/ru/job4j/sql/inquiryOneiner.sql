@@ -1,0 +1,1 @@
+select pp.name, p.name, p.price from products as pp join positions as p on pp.positions_id = p.id;
