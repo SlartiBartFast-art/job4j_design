@@ -3,7 +3,8 @@ select * from departments as ss right join employees as s on s.depart_id = ss.id
 select * from employees as s full join departments as ss on s.depart_id = ss.id;
 select * from employees as s cross join departments as ss;*/
 
-/*select * from departments as s left join employees as ss on s.id = ss.depart_id;*/
+/*select * from departments as s left join employees as ss on s.id = ss.depart_id
+  where ss.id is null;*/
 
 /*select * from employees as s left join departments as ss on s.depart_id = ss.id;
 select * from departments as ss right join employees as s on s.depart_id = ss.id;
