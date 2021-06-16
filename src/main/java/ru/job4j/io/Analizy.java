@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO 1. Реализуйте метод unavailable.
+// 1. Реализуйте метод unavailable.
 //source - имя файла лога
 //target - имя файла после анализа.
 //Метод anavailable должен находить диапазоны, когда сервер не работал.

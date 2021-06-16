@@ -69,9 +69,7 @@ public class ShellCd {
     }
 
     /**
-     * Проверяет что путь переданный в метод .. является директорией/каталогом
-     * открывает каталог
-     *
+     * Показывает путь
      * @return
      */
     public String pwd() {
@@ -84,7 +82,6 @@ public class ShellCd {
     }
 
    /* private Console run() {
-
        var s = console.readLine();
         cd(s);
         return console.printf(pwd());

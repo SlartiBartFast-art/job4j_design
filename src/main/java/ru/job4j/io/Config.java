@@ -16,7 +16,6 @@ public class Config {
         this.path = path;
     }
 
-    //TODO Напишите тест ConfigTest.
     // Реализуйте метод load по аналогии с методом toString.
 
     /**
