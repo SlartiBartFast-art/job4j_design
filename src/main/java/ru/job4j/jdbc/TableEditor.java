@@ -1,9 +1,6 @@
 package ru.job4j.jdbc;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
 import java.util.Properties;
 
@@ -49,6 +46,7 @@ public class TableEditor implements AutoCloseable {
 
     /**
      * Метод устанавливает соединение + создает объект для внесния изминений в базу
+     *
      * @param string запрос/действие которое необходимо провести в таблице
      */
     private void setConnection(String string) {
@@ -126,6 +124,7 @@ public class TableEditor implements AutoCloseable {
 
     /**
      * Метод производит изминение/переименование колонки в таблице
+     *
      * @param tableName     имя таблицы в БД в которой будет происходит смена колонки
      * @param columnName    имя колонки для переименования
      * @param newColumnName новое имя колонки после переименования
@@ -142,6 +141,7 @@ public class TableEditor implements AutoCloseable {
 
     /**
      * Метод выводит схему таблицы, а именно ее столбцы и их типы
+     *
      * @param tableName tableName таблицы котороую мы хотим вывести
      * @return строковое представление таблицы
      * @throws SQLException
@@ -167,30 +167,28 @@ public class TableEditor implements AutoCloseable {
         }
     }
 
-    public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws Exception {
 
         Properties properties = new Properties();
-
-        try {
-            properties.load(new FileInputStream("connDemoApp.properties"));
+        try (FileInputStream fileInputStream = new FileInputStream("connDemoApp.properties")) {
+            properties.load(fileInputStream);
+            try (TableEditor tableEditor = new TableEditor(properties)) {
+                tableEditor.createTable("warlon");
+                System.out.println(tableEditor.getScheme("warlon"));
+                tableEditor.addColumn("warlon", "name", "varchar (250)");
+                System.out.println(tableEditor.getScheme("warlon"));
+                tableEditor.addColumn("warlon", "ego", "varchar (50)");
+                System.out.println(tableEditor.getScheme("warlon"));
+                tableEditor.dropColumn("warlon", "name");
+                System.out.println(tableEditor.getScheme("warlon"));
+                tableEditor.renameColumn("warlon", "ego", "black");
+                System.out.println(tableEditor.getScheme("warlon"));
+                tableEditor.dropTable("warlon");
+                System.out.println(tableEditor.getScheme("warlon"));
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            TableEditor tableEditor = new TableEditor(properties);
-            tableEditor.createTable("warlon");
-            System.out.println(tableEditor.getScheme("warlon"));
-            tableEditor.addColumn("warlon", "name", "varchar (250)");
-            System.out.println(tableEditor.getScheme("warlon"));
-            tableEditor.addColumn("warlon", "ego", "varchar (50)");
-            System.out.println(tableEditor.getScheme("warlon"));
-            tableEditor.dropColumn("warlon", "name");
-            System.out.println(tableEditor.getScheme("warlon"));
-            tableEditor.renameColumn("warlon", "ego", "black");
-            System.out.println(tableEditor.getScheme("warlon"));
-            tableEditor.dropTable("warlon");
-            System.out.println(tableEditor.getScheme("warlon"));
-        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
