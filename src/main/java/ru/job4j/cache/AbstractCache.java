@@ -16,14 +16,26 @@ import java.util.Map;
  * @param <V>
  */
 public abstract class AbstractCache<K, V> {
+    //where will be placed file name(K), file date(V)
     protected final Map<K, SoftReference<V>> cache = new HashMap<>();
 
+    /**
+     * метод записывает в Map<K, V>
+     * where Key -file name,Value - file data
+     * @param key String имя объекта(файла)
+     * @param value (содержимое файла)
+     */
     public void put(K key, V value) {
-
     }
 
+    /**
+     * Метод проверяет есть ли в Мап данный файл
+     * Возвращает содержимое по ключу файла
+     * @param key file name
+     * @return V (содержимое/content Value - file date)
+     */
     public V get(K key) {
-        return null;
+      return null;
     }
 
     /**
