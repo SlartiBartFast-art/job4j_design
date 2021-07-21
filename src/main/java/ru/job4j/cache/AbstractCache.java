@@ -26,6 +26,8 @@ public abstract class AbstractCache<K, V> {
      * @param value (содержимое файла)
      */
     public void put(K key, V value) {
+        SoftReference<V> softReference = new SoftReference<>(value);
+        cache.put(key, softReference);
     }
 
     /**
@@ -35,7 +37,14 @@ public abstract class AbstractCache<K, V> {
      * @return V (содержимое/content Value - file date)
      */
     public V get(K key) {
-      return null;
+        //return cache.get(key).get(); // падает с NPE
+       // V v = null;
+        if (cache.get(key) != null) {
+            var softReference = cache.get(key);
+            System.out.println("method get softReference: " + softReference);
+            return softReference.get();
+        }
+        return null;
     }
 
     /**
